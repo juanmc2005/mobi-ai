@@ -18,7 +18,7 @@ function create_audio_metadata(labels)
     n = length(labels)
     for (id, lbl) in labels
         println("Analyzing file $id.wav")
-        data, srate = wavread("train/$id.wav")
+        data, srate = wavread("train/Train/$id.wav")
         channels = size(data,2)
         samples = size(data,1)
         len = samples / srate
@@ -40,7 +40,7 @@ function create_spectrogram(wavfile)
 end
 
 # Read class data
-df = CSV.read("train.csv", header=true)
+df = CSV.read("train/train.csv", header=true)
 # Read label dictionary : (sound id) => class
 labels = gen_label_dict(df)
 delete!(labels, 8542) # Bad file
@@ -59,7 +59,7 @@ audio_metadata = CSV.read("metadata.csv", header=true)
 # trace1 = scatter(;x=1:size(y,1), y=y[:,1], mode="lines")
 # trace2 = scatter(;x=1:size(y,1), y=y[:,2], mode="lines")
 # plot([trace1, trace2])
-spectr = create_spectrogram("train/0.wav")
+spectr = create_spectrogram("train/Train/0.wav")
 imshow(spectr)
 # imshow(log10.(power(spec)), extent=[first(t), last(t),
 #              fs*first(f), fs*last(f)], aspect="auto")

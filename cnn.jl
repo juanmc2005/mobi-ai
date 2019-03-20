@@ -43,11 +43,11 @@ model = Chain(
     # First convolution, operating upon a 48x48 images
     Conv((8, 8), 1=>16, pad=(1,1), stride=2, relu),
 
-    # Second convolution, operating upon a 24x24 image
+    # Second convolution, operating upon a 22x22 image
     Conv((8, 8), 16=>32, pad=(1,1), stride=2, relu),
 
-    # Reshape 3d tensor into a 2d one, at this point it should be (12, 12, 32, N)
-    # which is where we get the 7200 in the `Dense` layer below:
+    # Reshape 3d tensor into a 2d one, at this point it should be (9, 9, 32, N)
+    # which is where we get the 2592 in the `Dense` layer below:
     x -> reshape(x, :, size(x, 4)),
     Dense(2592, 10)
 ) |> gpu

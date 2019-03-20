@@ -19,7 +19,7 @@ function create_data_splits(n=img_n, m=img_m)
   @info("Generating spectrograms of size $(n)x$(m)...")
 
   # Read labels from source CSV file
-  file_to_class = gen_label_dict("train.csv")
+  file_to_class = gen_label_dict("train/train.csv")
   labels = simple_labels(file_to_class)
 
   # Create spectrograms with values between 0 and 1 (via sigmoid)

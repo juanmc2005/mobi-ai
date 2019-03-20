@@ -47,7 +47,7 @@ function create_spectrogram_base(labels, n=200, m=100)
     spectres = Array{Any}(undef, 0)
     iter = 0
     for id in sort(collect(keys(labels)))
-        spectr = create_spectrogram("train/$id.wav")
+        spectr = create_spectrogram("train/Train/$id.wav")
         if size(spectr, 2) == 0
             @info("$id.wav spectrogram has 0 columns. Skipping...")
         else
