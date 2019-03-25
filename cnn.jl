@@ -63,7 +63,7 @@ function accuracy(x, y)
   mean(onecold.(probs) .== onecold(y))
 end
 
-opt = ADAM(0.0005)
+opt = ADAM(0.001)
 
 @info("Beginning training loop...")
 best_acc = 0.0
@@ -94,7 +94,7 @@ for epoch_idx in 1:100
     end
 
     # If we haven't seen improvement in 5 epochs, drop our learning rate:
-    if epoch_idx - last_improvement >= 2 && opt.eta > 1e-6
+    if epoch_idx - last_improvement >= 3 && opt.eta > 1e-5
         opt.eta /= 10.0
         @warn(" -> Haven't improved in a while, dropping learning rate to $(opt.eta)!")
 
@@ -102,22 +102,18 @@ for epoch_idx in 1:100
         last_improvement = epoch_idx
     end
 
-    if epoch_idx - last_improvement >= 6
+    if epoch_idx - last_improvement >= 10
         @warn(" -> We're calling this converged.")
         break
     end
 end
 
-# Best Accuracy: 74% - File sound_cnn.bson
+# Best Accuracy: 77.4% - File sound_cnn.bson
 #   batch_size       = 100
 #   spectrogram size = 48x48
-#   eta              = 0.0005
+#   eta              = 0.001
 #   model:
 #       Conv((8, 8), 1=>16, pad=(1,1), stride=2, relu)
 #       Conv((8, 8), 16=>32, pad=(1,1), stride=2, relu),
 #       Dense(2592, 10)
 #       softmax
-
-# Problems : loss is NaN, tried changing crossentropy to logitcrossentropy
-#            for numerical stability, and decreasing ETA, but the
-#            error keeps appearing. Maybe Flux bug ?
